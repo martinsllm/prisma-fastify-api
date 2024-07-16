@@ -8,6 +8,7 @@
     "lint": "eslint --fix src/**/*.ts"
   },
   "dependencies": {
+    "@prisma/client": "5.16.2",
     "@types/node": "^20.14.10",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
