@@ -1,0 +1,24 @@
+{
+  "name": "prisma-fastify-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsx watch ./src/index.ts",
+    "lint": "eslint --fix src/**/*.ts"
+  },
+  "dependencies": {
+    "@types/node": "^20.14.10",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.28.1",
+    "prisma": "^5.16.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "eslint": "9.x",
+    "globals": "^15.8.0",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^7.16.1"
+  }
+}
