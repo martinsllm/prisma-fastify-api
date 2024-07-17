@@ -29,6 +29,37 @@ class UserRepository {
         return resp(201, result);
     }
 
+    async update(user: IUser, id: number) {
+        const { status, message } = await this.getById(id);
+
+        if(status == 404) return resp(status, message);
+
+        await prisma.user.update({
+            data: {
+                ...user
+            },
+            where: { 
+                id 
+            }
+        });
+
+        return resp(204, []);
+    }
+
+    async delete(id: number) {
+        const { status, message } = await this.getById(id);
+
+        if(status == 404) return resp(status, message);
+
+        await prisma.user.delete({
+            where: {
+                id
+            }
+        });
+
+        return resp(204, []);
+    }
+
 }
 
 export default UserRepository;

@@ -21,4 +21,14 @@ export async function UserController(fastify: FastifyInstance) {
         return reply.status(status).send(message);
     });
 
+    fastify.put<{Body: IUser, Params: { id: number }}>('/:id', async (request, reply) => {
+        const { status, message } = await userRepository.update(request.body, +request.params.id);
+        return reply.status(status).send(message);
+    });
+
+    fastify.delete<{Params: { id: number }}>('/:id', async (request, reply) => {
+        const { status, message } = await userRepository.delete(+request.params.id);
+        return reply.status(status).send(message);
+    });
+
 }
