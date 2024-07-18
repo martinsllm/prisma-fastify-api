@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import UserRepository from '../repositories/user.repository';
 import { IUser } from '../interfaces/user.interface';
+import { userSchemaValidation } from '../services/validation/userSchema';
 
 export async function UserController(fastify: FastifyInstance) {
 
@@ -11,23 +12,30 @@ export async function UserController(fastify: FastifyInstance) {
         return reply.status(status).send(message);
     });
 
-    fastify.get<{Params: { id: number }}>('/:id', async (request, reply) => {
-        const { status, message } = await userRepository.getById(+request.params.id);
+    fastify.get<{Params: { id: number }}>
+    ('/:id', async (request, reply) => {
+        const { id } = request.params;
+        const { status, message } = await userRepository.getById(+id);
         return reply.status(status).send(message);
     });
 
-    fastify.post<{Body: IUser}>('/', async (request, reply) => {
+    fastify.post<{Body: IUser}>
+    ('/', userSchemaValidation, async (request, reply) => {
         const { status, message } = await userRepository.create(request.body);
         return reply.status(status).send(message);
     });
 
-    fastify.put<{Body: IUser, Params: { id: number }}>('/:id', async (request, reply) => {
-        const { status, message } = await userRepository.update(request.body, +request.params.id);
+    fastify.put<{Body: IUser, Params: { id: number }}>
+    ('/:id', userSchemaValidation, async (request, reply) => {
+        const { id } = request.params;
+        const { status, message } = await userRepository.update(request.body, +id);
         return reply.status(status).send(message);
     });
 
-    fastify.delete<{Params: { id: number }}>('/:id', async (request, reply) => {
-        const { status, message } = await userRepository.delete(+request.params.id);
+    fastify.delete<{Params: { id: number }}>
+    ('/:id', async (request, reply) => {
+        const { id } = request.params;
+        const { status, message } = await userRepository.delete(+id);
         return reply.status(status).send(message);
     });
 
