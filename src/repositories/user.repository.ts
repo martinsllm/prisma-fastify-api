@@ -1,6 +1,7 @@
 import { prisma } from '../database/prisma';
 import { IUser } from '../interfaces/user.interface';
 import { resp, respM } from '../utils/resp';
+import { hashPassword } from '../services/PasswordCrypto';
 
 class UserRepository {
 
@@ -20,9 +21,12 @@ class UserRepository {
     }
 
     async create(user: IUser) {
+        const hashedPassword = await hashPassword(user.password);
+
         const result = await prisma.user.create({
             data: {
                 ...user,
+                password: hashedPassword
             }
         });
 
