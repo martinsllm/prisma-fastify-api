@@ -1,4 +1,4 @@
-import { genSalt, hash } from 'bcryptjs';
+import { genSalt, hash, compare } from 'bcryptjs';
 
 const SALT_ROUNDS = 8;
 
@@ -7,4 +7,8 @@ const hashPassword = async (password: string) => {
     return await hash(password, saltGenerated);
 };
 
-export { hashPassword };
+const verifyPassword = async (password: string, hash: string) => {
+    return await compare(password, hash);
+};
+
+export { hashPassword, verifyPassword };

@@ -20,6 +20,16 @@ class UserRepository {
         return resp(200, result);
     }
 
+    async getByEmail(email: string) {
+        const result = await prisma.user.findFirst({
+            where: { email }
+        });
+
+        if(!result) return respM(401, 'Unauthorized!');
+
+        return resp(200, result);
+    }
+
     async create(user: IUser) {
         const hashedPassword = await hashPassword(user.password);
 
