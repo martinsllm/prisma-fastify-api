@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import PostRepository from '../repositories/post.repository';
-import { verifyToken } from '../services/JWTService';
+import { decodeToken, verifyToken } from '../services/JWTService';
+import { IPost } from '../interfaces/post.interface';
 
 export async function PostController(fastify: FastifyInstance) {
 
@@ -10,6 +11,12 @@ export async function PostController(fastify: FastifyInstance) {
 
     fastify.get('/', async (request, reply) => {
         const { status, message } = await postRepository.get();
+        return reply.status(status).send(message);
+    });
+
+    fastify.post<{Body: IPost}>('/', async (request, reply) => {
+        const userId = decodeToken(request.headers.authorization!);
+        const { status, message } = await postRepository.create(request.body, userId);
         return reply.status(status).send(message);
     });
 
