@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsx watch ./src/index.ts",
+    "dev": "tsx watch ./src/index.ts",
     "lint": "eslint --fix src/**/*.ts"
   },
   "dependencies": {
